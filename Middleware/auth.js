@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const BlogModel = require("../Models/blogModel")
 
+
  //==================== [Authentication Middleware]===============================
 
 const Authentication = function (req, res, next) {
@@ -49,3 +50,21 @@ const Authorisation = async function (req, res, next) {
     }
 };
 module.exports.Authorisation = Authorisation ;
+
+const mid3 = async function (req,res,next){
+    try {
+        let token = req.headers["x-api-key"]
+        // console.log("hii")
+        if (!token) return res.status(400).send({ status: false, msg: "token must be present " })
+        let decodedToken = jwt.verify(token, "aishwarya-anugya-anjali-kimmi")
+        let authorId = req.query.authorId
+        
+        if ( authorId && authorId !== decodedToken.authorId ) return res.status(400).send({ status: false, msg: "You are not authorized to delete these blogs. authorId doesn't belong to you."})
+        req.authorId = decodedToken.authorId
+        next()
+    } catch (err) {
+        return res.status(500).send({ status: false, msg: err.message })
+    }
+
+}
+module.exports.mid3 = mid3 ;

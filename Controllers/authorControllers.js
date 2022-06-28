@@ -8,21 +8,21 @@ const jwt = require("jsonwebtoken");
  const isValid = function (value) {
   
   if( typeof value == 'string' && value.trim().length == 0 ) {
-    console.log("2") 
+    // console.log("2") 
       return false
   }
   if ( typeof value == 'string' && value.length !== value.trim().length ) {
-    console.log("4")
+    // console.log("4")
       return false
   }
   if ( typeof value == 'number' ) {
-    console.log("5")
+    // console.log("5")
       return false
   }
   return true
 }
   const isValidTitle = function(title){
-    console.log("0")
+    // console.log("0")
     return ['Mr','Mrs','Miss'].indexOf(title) !== -1
     
    }
@@ -32,9 +32,10 @@ const createAuthor = async function (req, res) {
     let data = req.body 
    const { fname, lname, title, email, password } = data;
    
-        if ( !isValid ( fname ) ){res.status(400).send({status:false, msg:"Enter valid First Name."})} 
-        if ( !isValid ( lname ) ) {res.status(400).send({status:false, msg:"Enter valid Last Name."})}
-        if ( !isValidTitle ( title ) ) {res.status(400).send({status:false, msg:"Enter valid Title."})}
+        if ( !isValid ( fname ) ){return res.status(400).send({status:false, msg:"Enter valid First Name."})} 
+        if ( !isValid ( lname ) ) {return res.status(400).send({status:false, msg:"Enter valid Last Name."})}
+        if ( !isValid ( title ) ) {return res.status(400).send({status:false, msg:"Title is required"})}
+        if ( !isValidTitle ( title ) ) {return res.status(400).send({status:false, msg: "Title should be among Mr, Mrs and Miss"})}
         if ( !isValid ( email ) ) {res.status(400).send({status:false, msg:"Enter valid Email."})}
         if ( !isValid ( password ) ){res.status(400).send({status:false, msg:"Enter valid Password."})}
         
