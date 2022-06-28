@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const route = require("./routes/route");
-const { default: mongoose } = require("mongoose");
+const  mongoose  = require("mongoose");
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
-mongoose.connect("mongodb+srv://AnugyaBansal1:XUEwXSjvoCKPXBV9@cluster0.piara.mongodb.net/AnugyaBansal12-DB?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://AnugyaBansal1:XUEwXSjvoCKPXBV9@cluster0.piara.mongodb.net/AnugyaBansal00-DB", {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
