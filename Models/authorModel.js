@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const authorSchema = new mongoose.Schema({
     fname:{
     type :String,
-    required:true,
-    trim:true
+    required:true
     },
     lname:{
         type:String,

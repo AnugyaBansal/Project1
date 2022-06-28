@@ -8,7 +8,7 @@ const isValid = function (value) {
     //     return false
     // }
     if( typeof value == 'string' && value.trim().length == 0 ) {
-      console.log("2")
+    //   console.log("2")
         return false
     }
     if ( typeof value == 'string' && value.length !== value.trim().length ) {
@@ -77,15 +77,20 @@ const updateBlog = async function (req, res) {
     try {
         let data = req.body;
         let blogId = req.params.blogId;
-        // let authorToBeModified = req.query.authorId
+        
+        let authorToBeModified = req.authorId
         const { title, body, tags, subCategory, category } = data;
         if (Object.keys(data).length == 0) {
             return res.status(400).send({ status: false, msg: "Body should not be Empty.. " })
         }
 
-        let blog = await BlogModel.findOne({_id : blogId, authorId:req.query.authorId});
+        let blog = await BlogModel.findOne({_id : blogId});
         if (!blog) {
             return res.status(404).send({ status: false, msg: "No such blog exists" });
+        }
+        let authorId = await BlogModel.findOne({_id :authorToBeModified });
+        if (!authorId) {
+            return res.status(404).send({ status: false, msg: "No such authorId exists" });
         }
         if (blog.isDeleted == true) {
             return res.status(400).send({ status: false, msg: "Blog already deleted" })
@@ -129,9 +134,9 @@ const deleteblogByQuery = async function (req, res) {
         
         const { authorId, category, subCategory, tags } = data
 
-        if (Object.keys(data).length == 0) {
-            return res.status(400).send({ status: false, msg: "Body should not be Empty.. " })
-        }
+        // if (Object.keys(data).length == 0) {
+        //     return res.status(400).send({ status: false, msg: "Body should not be Empty.. " })
+        // }
 
         if (category) {
             let verifyCategory = await BlogModel.findOne({ category: category })
